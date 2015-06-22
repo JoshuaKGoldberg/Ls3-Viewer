@@ -1,13 +1,13 @@
 /// <reference path="LsGenerator.js" />
 
 document.onreadystatechange = (function () {
-    function generateUntil(max, container, generator) {
+    function generateNext(min, max, container, generator) {
         var row, cell, span, generated, excludes,
             i, j;
 
-        generator.generateUntil(max);
+        generator.generateNext(max - min);
 
-        for (i = 0; i < generator.generatedArray.length; i += 1) {
+        for (i = min; i < generator.generatedArray.length; i += 1) {
             row = document.createElement("div");
             row.className = "row";
 
@@ -47,8 +47,17 @@ document.onreadystatechange = (function () {
             {
                 "keepExcludesOf": true
             }),
+            increment = 100,
+            current = 0,
             container = document.getElementById("viewer");
 
-        generateUntil(50000, container, generator);
+        setInterval(
+            function () {
+                console.log(window.scrollY, "&", window.innerHeight, " vs", document.body.clientHeight - 70);
+                if (window.scrollY + window.innerHeight > document.body.clientHeight - 70) {
+                    generateNext(current, current += increment, container, generator);
+                }
+            },
+            70);
     };
 })();
