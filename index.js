@@ -38,6 +38,29 @@ document.onreadystatechange = (function () {
         }
     }
 
+    function generateSearch(search) {
+        if (!search) {
+            search = "";
+        } else {
+            if (search[0] == "?") {
+                search = search.substring(1);
+            }
+        }
+
+        var args = search.split("?").map(
+            function (text) {
+                return text.split("=");
+            }),
+            output = {},
+            i;
+
+        for (i = 0; i < args.length; i += 1) {
+            output[args[i][0]] = args[i][1];
+        }
+
+        return output;
+    }
+
     return function (event) {
         if (event.target.readyState !== "complete") {
             return;
@@ -47,15 +70,32 @@ document.onreadystatechange = (function () {
             {
                 "keepExcludesOf": true
             }),
+            search = generateSearch(location.search),
             increment = 100,
-            current = 0,
+            current = increment,
             container = document.getElementById("viewer");
+
+        if (search.max) {
+            generateNext(0, search.max, container, generator);
+            current = search.max;
+        } else {
+            generateNext(0, increment, container, generator);
+        }
 
         setInterval(
             function () {
-                console.log(window.scrollY, "&", window.innerHeight, " vs", document.body.clientHeight - 70);
-                if (window.scrollY + window.innerHeight > document.body.clientHeight - 70) {
-                    generateNext(current, current += increment, container, generator);
+                if (window.scrollY + window.innerHeight <= document.body.clientHeight - 70) {
+                    return;
+                }
+
+                generateNext(current, current += increment, container, generator);
+
+                if (window.history && history.replaceState) {
+                    history.replaceState(
+                        { "max": current },
+                        "LsGenerator (Max of " + current + ")",
+                        "#max=" + current
+                        );
                 }
             },
             70);
