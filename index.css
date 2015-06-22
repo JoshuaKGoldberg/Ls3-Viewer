@@ -21,6 +21,7 @@ body {
 .row {
     position: relative;
     white-space: nowrap;
+    z-index: 14;
 }
 
 .row.main {
@@ -61,11 +62,6 @@ body {
 
 /* Fancy row linking thing */
 
-.row:nth-of-type(1) .key:before,
-.row:nth-of-type(2) .key:before {
-    display: none;
-}
-
 .row:nth-of-type(2n) {
     margin-top: 7px;
 }
@@ -74,30 +70,29 @@ body {
     margin-bottom: 7px;
 }
 
-.row:nth-of-type(2n) .key:before {
-    content: " ";
+.gap {
     position: absolute;
-    margin-left: -.5em;
-    left: 21px;
-    top: -11px;
-    height: 26px;
-    width: 21%;
-    border-left: 2px solid #eee;
-    border-bottom: 2px solid #eee;
-    border-bottom-left-radius: 49%;
+    margin-top: -28px;
+    margin-left: 49px;
+    padding: 14px 0;
+    height: 49px;
+    width: 15px;
+    box-sizing: border-box;
+    border: 1px solid #eee;
+    border-right: 0;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    color: #dadada;
+    font-size: .77em;
+    z-index: 7;
 }
 
-.row:nth-of-type(2n + 1) .key:before {
-    content: " ";
-    position: absolute;
-    margin-left: -.5em;
-    left: 21px;
-    bottom: -11px;
-    height: 21px;
-    width: 21%;
-    border-left: 2px solid #eee;
-    border-top: 2px solid #eee;
-    border-top-left-radius: 49%;
+.gap span {
+    display: block;
+    margin-left: -50%;
+    width: 100%;
+    background: #fafafa;
+    text-align: center;
 }
 
 

@@ -8,10 +8,21 @@ document.onreadystatechange = (function () {
         generator.generateNext(max - min);
 
         for (i = min; i < generator.generatedArray.length; i += 1) {
+            generated = generator.generatedArray[i];
+
+            if (i % 2 === 0 && i > 0) {
+                row = document.createElement("span");
+                row.className = "gap";
+
+                cell = document.createElement("span");
+                cell.innerText = generated - generator.generatedArray[i - 1];
+
+                row.appendChild(cell);
+                container.appendChild(row);
+            }
+
             row = document.createElement("div");
             row.className = "row";
-
-            generated = generator.generatedArray[i];
 
             cell = document.createElement("span");
             cell.className = "index";
@@ -88,13 +99,16 @@ document.onreadystatechange = (function () {
                     return;
                 }
 
-                generateNext(current, current += increment, container, generator);
+                for (var i = current; i < current + increment; i += 1) {
+                    generateNext(i, i += increment, container, generator);
+                }
+                current += increment;
 
                 if (window.history && history.replaceState) {
                     history.replaceState(
                         { "max": current },
                         "LsGenerator (Max of " + current + ")",
-                        "#max=" + current
+                        "?max=" + current
                         );
                 }
             },
