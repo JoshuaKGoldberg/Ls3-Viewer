@@ -1,0 +1,116 @@
+/* Containing page */
+
+html, body {
+    margin: 0;
+    border: 0;
+}
+
+body {
+    padding: .7em 1.17em;
+    background: #fafafa;
+}
+
+
+/* Basics */
+
+#viewer {
+    font-size: 1.4em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.row {
+    position: relative;
+    white-space: nowrap;
+}
+
+.row.main {
+    padding-bottom: .7em;
+    font-size: 1.17em;
+}
+
+.row.main .key {
+    width: 2.1em;
+}
+
+.index {
+    display: inline-block;
+    width: 1.4em;
+    color: #aaa;
+    text-align: center;
+}
+
+.key {
+    display: inline-block;
+    position: relative;
+    padding-left: 14px;
+    width: 3.5em;
+    color: #212121;
+    text-align: center;
+}
+
+.values {
+    display: inline-block;
+    padding: .35em 14px;
+    color: #777;
+}
+
+    .values span {
+        margin-right: .7em;
+    }
+
+
+/* Fancy row linking thing */
+
+.row:nth-of-type(1) .key:before,
+.row:nth-of-type(2) .key:before {
+    display: none;
+}
+
+.row:nth-of-type(2n) {
+    margin-top: 7px;
+}
+
+.row:nth-of-type(2n + 1) {
+    margin-bottom: 7px;
+}
+
+.row:nth-of-type(2n) .key:before {
+    content: " ";
+    position: absolute;
+    margin-left: -.5em;
+    left: 21px;
+    top: -11px;
+    height: 26px;
+    width: 21%;
+    border-left: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-bottom-left-radius: 49%;
+}
+
+.row:nth-of-type(2n + 1) .key:before {
+    content: " ";
+    position: absolute;
+    margin-left: -.5em;
+    left: 21px;
+    bottom: -11px;
+    height: 21px;
+    width: 21%;
+    border-left: 2px solid #eee;
+    border-top: 2px solid #eee;
+    border-top-left-radius: 49%;
+}
+
+
+/* First row has no border */
+
+.row:nth-of-type(1) .values {
+    border: 0;
+}
+
+.row:nth-of-type(2) .values {
+    border: 0;
+}
+
+.row:nth-of-type(3) .values {
+    border-top: 0;
+}
