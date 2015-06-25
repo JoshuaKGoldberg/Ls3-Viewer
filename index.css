@@ -11,9 +11,28 @@ body {
 }
 
 
+/* Head text */
+
+#headtext {
+    float: left;
+}
+
+
+/* Options */
+
+#options {
+    float: right;
+    max-width: 50%;
+    padding-left: 3.5em;
+    text-align: right;
+    opacity: .7;
+}
+
+
 /* Basics */
 
 #viewer {
+    clear: both;
     font-size: 1.4em;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -24,14 +43,14 @@ body {
     z-index: 14;
 }
 
-.row.main {
-    padding-bottom: .7em;
-    font-size: 1.17em;
-}
+    .row.main {
+        padding-bottom: .7em;
+        font-size: 1.17em;
+    }
 
-.row.main .key {
-    width: 2.1em;
-}
+        .row.main .key {
+            width: 2.1em;
+        }
 
 .index {
     display: inline-block;
@@ -77,6 +96,8 @@ body {
     padding: 14px 0;
     height: 49px;
     width: 15px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid #eee;
     border-right: 0;
@@ -87,13 +108,13 @@ body {
     z-index: 7;
 }
 
-.gap span {
-    display: block;
-    margin-left: -50%;
-    width: 100%;
-    background: #fafafa;
-    text-align: center;
-}
+    .gap span {
+        display: block;
+        margin-left: -50%;
+        width: 100%;
+        background: #fafafa;
+        text-align: center;
+    }
 
 
 /* First row has no border */
@@ -108,4 +129,15 @@ body {
 
 .row:nth-of-type(3) .values {
     border-top: 0;
+}
+
+
+/* Primes */
+
+#viewer.primes .key.prime {
+    color: blue;
+}
+
+#viewer.primes .excluded.prime {
+    color: cadetblue;
 }

@@ -1,11 +1,14 @@
 /// <reference path="LsGenerator.js" />
+/// <reference path="PrimeGenerator.js" />
 
 document.onreadystatechange = (function () {
-    function generateNext(min, max, container, generator) {
-        var row, cell, span, generated, excludes,
+    function generateNext(min, max, container, generator, primeGenerator) {
+        var primes = primeGenerator.primes,
+            row, cell, span, generated, excludes,
             i, j;
 
         generator.generateNext(max - min);
+        primeGenerator.generate(generator.maximum);
 
         for (i = min; i < generator.generatedArray.length; i += 1) {
             generated = generator.generatedArray[i];
@@ -26,12 +29,22 @@ document.onreadystatechange = (function () {
 
             cell = document.createElement("span");
             cell.className = "index";
-            cell.textContent = i;
+            cell.textContent = i + 1;
+
+            if (primes[i + 1]) {
+                cell.className += " prime";
+            }
+
             row.appendChild(cell);
 
             cell = document.createElement("span");
             cell.className = "key";
             cell.textContent = generated;
+
+            if (primes[generated]) {
+                cell.className += " prime";
+            }
+
             row.appendChild(cell);
 
             cell = document.createElement("span");
@@ -41,6 +54,11 @@ document.onreadystatechange = (function () {
                 span = document.createElement("span");
                 span.className = "excluded";
                 span.textContent = excludes[j];
+
+                if (primes[excludes[j]]) {
+                    span.className += " prime";
+                }
+
                 cell.appendChild(span);
             }
             row.appendChild(cell);
@@ -84,15 +102,22 @@ document.onreadystatechange = (function () {
             search = generateSearch(location.search),
             increment = 100,
             current = increment,
-            container = document.getElementById("viewer");
+            container = document.getElementById("viewer"),
+            primeGenerator = new PrimeGenerator();
 
+        // If a max has been defined, do that
         if (search.max) {
-            generateNext(0, search.max, container, generator);
+            search.max = Math.min(1000, Number(search.max));
+
+            primeGenerator.generate(search.max);
+            generateNext(0, search.max, container, generator, primeGenerator);
             current = search.max;
         } else {
-            generateNext(0, increment, container, generator);
+            primeGenerator.generate(current);
+            generateNext(0, increment, container, generator, primeGenerator);
         }
 
+        // Constantly poll the page for screen size changes
         setInterval(
             function () {
                 if (window.scrollY + window.innerHeight <= document.body.clientHeight - 70) {
@@ -100,7 +125,7 @@ document.onreadystatechange = (function () {
                 }
 
                 for (var i = current; i < current + increment; i += 1) {
-                    generateNext(i, i += increment, container, generator);
+                    generateNext(i, i += increment, container, generator, primeGenerator);
                 }
                 current += increment;
 
@@ -113,5 +138,16 @@ document.onreadystatechange = (function () {
                 }
             },
             70);
+
+        // Primes checkbox toggles whether primes are highlighted
+        document.getElementById("inputPrimes").onchange = function (event) {
+            var checked = event.target.checked;
+
+            if (checked) {
+                document.getElementById("viewer").className = "primes";
+            } else {
+                document.getElementById("viewer").className = "";
+            }
+        };
     };
 })();

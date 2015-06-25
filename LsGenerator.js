@@ -22,6 +22,8 @@ LsGenerator.prototype.generateNext = function generateNext(number) {
         exclude,
         i, j;
 
+    console.log("Now getting", number);
+
     i = this.maximum;
 
     do {
@@ -66,6 +68,6 @@ LsGenerator.prototype.generateNext = function generateNext(number) {
     } while (number > 0);
 
     this.maximum = Math.max(this.maximum, i);
-}
+};
 
 // async (start, stop methods)
