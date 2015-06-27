@@ -18,8 +18,8 @@ function LsViewer(settings) {
         this.generateNext(0, this.search.max);
         this.current = this.search.max;
     } else {
-        this.primeGenerator.generate(current);
-        this.generateNext(0, increment);
+        this.primeGenerator.generate(this.current);
+        this.generateNext(0, this.increment);
     }
 
     // Primes checkbox toggles whether primes are highlighted
@@ -37,6 +37,9 @@ function LsViewer(settings) {
     setInterval(this.checkScreenSize.bind(this), 70);
 }
 
+/**
+ * 
+ */
 LsViewer.prototype.generateNext = function (min, max) {
     var primes = this.primeGenerator.primes,
         row, cell, span, generated, excludes,
@@ -102,6 +105,9 @@ LsViewer.prototype.generateNext = function (min, max) {
     }
 };
 
+/**
+ * 
+ */
 LsViewer.prototype.generateSearch = function generateSearch(search) {
     if (!search) {
         search = "";
@@ -125,21 +131,31 @@ LsViewer.prototype.generateSearch = function generateSearch(search) {
     return output;
 };
 
+/**
+ * 
+ */
+LsViewer.prototype.retractAfter = function (min) {
+
+};
+
+/**
+ * 
+ */
 LsViewer.prototype.checkScreenSize = function () {
     if (window.scrollY + window.innerHeight <= document.body.clientHeight - 70) {
         return;
     }
 
-    for (var i = current; i < current + increment; i += 1) {
-        generateNext(i, i += increment, container, generator, primeGenerator);
+    for (var i = this.current; i < this.current + this.increment; i += 1) {
+        this.generateNext(i, i += this.increment);
     }
-    current += increment;
+    this.current += this.increment;
 
     if (window.history && history.replaceState) {
         history.replaceState(
-            { "max": current },
-            "LsGenerator (Max of " + current + ")",
-            "?max=" + current
+            { "max": this.current },
+            "LsGenerator (Max of " + this.current + ")",
+            "?max=" + this.current
             );
     }
 };

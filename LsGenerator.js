@@ -70,4 +70,37 @@ LsGenerator.prototype.generateNext = function generateNext(number) {
     this.maximum = Math.max(this.maximum, i);
 };
 
+/**
+ * 
+ */
+LsGenerator.prototype.retractAfter = function (minimum) {
+    var excludedStart = this.findMinimum(this.excludedArray, minimum),
+        generatedStart = this.findMinimum(this.generatedArray, minimum);
+
+
+};
+
+/**
+ * 
+ */
+LsGenerator.prototype.findMinimum = function (array, minimum) {
+    var min = 0,
+        max = array.length - 1,
+        current;
+
+    while (min <= max) {
+        current = (min + max) / 2 | 0;
+
+        if (array[current] < minimum) {
+            min = current + 1;
+        } else if (array[current] > minimum) {
+            max = current - 1;
+        } else {
+            return current;
+        }
+    }
+
+    return -1;
+};
+
 // async (start, stop methods)
