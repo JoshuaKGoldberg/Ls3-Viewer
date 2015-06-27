@@ -8,12 +8,18 @@ html, body {
 body {
     padding: .7em 1.17em;
     background: #fafafa;
+    text-align: center;
 }
 
 
 /* Head text */
 
+h1 {
+    margin-top: 0;
+}
+
 #headtext {
+    padding-top: .49em;
     float: left;
 }
 
@@ -35,6 +41,7 @@ body {
     clear: both;
     font-size: 1.4em;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: left;
 }
 
 .row {
@@ -140,4 +147,23 @@ body {
 
 #viewer.primes .excluded.prime {
     color: cadetblue;
+}
+
+
+/* Adder */
+
+#adder {
+    display: inline-block;
+    font-style: italic;
+    text-align: center;
+}
+
+#adder #adderAmount {
+    margin-bottom: .35em;
+    width: 4.9em;
+    text-align: center;
+}
+
+#adder #adderButton {
+    width: 100%;
 }

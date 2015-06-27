@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 function LsGenerator(settings) {
     this.excludedArray = [];
     this.excludedMap = {};
@@ -22,7 +25,7 @@ LsGenerator.prototype.generateNext = function generateNext(number) {
         exclude,
         i, j;
 
-    console.log("Now getting", number);
+    console.log("Generating", number);
 
     i = this.maximum;
 
@@ -74,10 +77,27 @@ LsGenerator.prototype.generateNext = function generateNext(number) {
  * 
  */
 LsGenerator.prototype.retractAfter = function (minimum) {
+    // First find where both exclusions and generateds 
     var excludedStart = this.findMinimum(this.excludedArray, minimum),
-        generatedStart = this.findMinimum(this.generatedArray, minimum);
+        generatedStart = this.findMinimum(this.generatedArray, minimum),
+        i;
 
+    // Remove all the excluded numbers past the minimum
+    for (i = excludedStart; i < this.excludedArray.length; i += 1) {
+        delete this.excludedMap[this.excludedArray[i]];
+        delete this.excludesOf[this.excludedArray[i]];
+    }
+    this.excludedArray.length = excludedStart;
 
+    // Remove all the generated numbers past the minimum
+    for (i = generatedStart; i < this.generatedArray.length; i += 1) {
+        delete this.generatedMap[this.generatedArray[i]];
+    }
+    this.generatedArray.length = generatedStart;
+
+    this.maximum = this.generatedArray[this.generatedArray.length - 1] || 1;
+
+    return generatedStart;
 };
 
 /**
@@ -98,6 +118,10 @@ LsGenerator.prototype.findMinimum = function (array, minimum) {
         } else {
             return current;
         }
+    }
+
+    if (array[min] > minimum) {
+        return min;
     }
 
     return -1;

@@ -6,21 +6,11 @@ function LsViewer(settings) {
 
     this.search = this.generateSearch(location.search),
     this.increment = 100,
-    this.current = this.increment,
+    this.current = 0,
     this.container = document.getElementById("viewer"),
     this.primeGenerator = new PrimeGenerator();
 
-    // If a max has been defined, do that
-    if (this.search.max) {
-        this.search.max = Math.min(1000, Number(this.search.max));
-
-        this.primeGenerator.generate(this.search.max);
-        this.generateNext(0, this.search.max);
-        this.current = this.search.max;
-    } else {
-        this.primeGenerator.generate(this.current);
-        this.generateNext(0, this.increment);
-    }
+    this.generateNext(this.increment);
 
     // Primes checkbox toggles whether primes are highlighted
     document.getElementById("inputPrimes").onchange = function (event) {
@@ -31,24 +21,28 @@ function LsViewer(settings) {
         } else {
             document.getElementById("viewer").className = "";
         }
-    };
+    }.bind(this);
 
-    // Constantly poll the page for screen size changes
-    setInterval(this.checkScreenSize.bind(this), 70);
+    // Adder button gets adds more
+    document.getElementById("adderButton").onclick = function () {
+        var amount = parseInt(document.getElementById("adderAmount").value);
+        this.generateNext(amount);
+    }.bind(this);
 }
 
 /**
  * 
  */
-LsViewer.prototype.generateNext = function (min, max) {
+LsViewer.prototype.generateNext = function (amount) {
     var primes = this.primeGenerator.primes,
+        cap = this.current + amount,
         row, cell, span, generated, excludes,
         i, j;
 
-    this.generator.generateNext(max - min);
+    this.generator.generateNext(amount);
     this.primeGenerator.generate(this.generator.maximum);
 
-    for (i = min; i < this.generator.generatedArray.length; i += 1) {
+    for (i = this.current; i < cap; i += 1) {
         generated = this.generator.generatedArray[i];
 
         if (i % 2 === 0 && i > 0) {
@@ -103,6 +97,8 @@ LsViewer.prototype.generateNext = function (min, max) {
 
         this.container.appendChild(row);
     }
+
+    this.current = cap;
 };
 
 /**
@@ -135,27 +131,16 @@ LsViewer.prototype.generateSearch = function generateSearch(search) {
  * 
  */
 LsViewer.prototype.retractAfter = function (min) {
+    var generatedStart = this.generator.retractAfter(min),
+        rows = Array.prototype.slice.call(this.container.querySelectorAll(".row")),
+        gaps = Array.prototype.slice.call(this.container.querySelectorAll(".gap")),
+        i;
 
-};
-
-/**
- * 
- */
-LsViewer.prototype.checkScreenSize = function () {
-    if (window.scrollY + window.innerHeight <= document.body.clientHeight - 70) {
-        return;
+    for (i = generatedStart + 1; i < rows.length; i += 1) {
+        this.container.removeChild(rows[i]);
     }
 
-    for (var i = this.current; i < this.current + this.increment; i += 1) {
-        this.generateNext(i, i += this.increment);
-    }
-    this.current += this.increment;
-
-    if (window.history && history.replaceState) {
-        history.replaceState(
-            { "max": this.current },
-            "LsGenerator (Max of " + this.current + ")",
-            "?max=" + this.current
-            );
+    for (i = Math.max(generatedStart - 3, 0) ; i < gaps.length; i += 1) {
+        this.container.removeChild(gaps[i]);
     }
 };

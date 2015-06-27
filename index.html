@@ -11,15 +11,18 @@
 
 <body>
     <header>
-        <section id="options">
-            <input id="inputPrimes" type="checkbox" />
-            <label>highlight primes</label>
-        </section>
-
         <section id="headtext">
+            <section id="options">
+                <input id="inputPrimes" type="checkbox" />
+                <label>highlight primes</label>
+            </section>
+            
             <h1>Ls3 Viewer</h1>
+            
             <p>
-                Explanation here
+                The following is a sequence of numbers that contains no <i>arithmetic progression</i> of length 3. An arithmetic progression is a series of numbers that increase by the same amount: for example, {1, 2, 3} or {5, 10, 15}.
+                <br /><br />
+                This series, <i>Lexicographically Smallest 3</i>, is theorized to be the smallest series of numbers that fits this description. Each number added is the smallest that would not create a progression of length 3.
             </p>
         </section>
     </header>
@@ -32,6 +35,14 @@
                 <span>excluded</span>
             </span>
         </div>
+    </section>
+
+    <section id="adder">
+        <label>generate</label>
+        <input id="adderAmount" type="number" value="100" />
+        <label>more</label>
+        <br />
+        <input id="adderButton" type="button" value="go" />
     </section>
 
     <script src="PrimeGenerator.js" type="text/javascript"></script>
