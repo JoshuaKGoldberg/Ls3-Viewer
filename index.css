@@ -59,6 +59,22 @@ h1 {
             width: 2.1em;
         }
 
+.deleter {
+    position: relative;
+    display: inline-block;
+    top: -3px;
+    color: rgb(140, 49, 49);
+    font-size: 70%;
+    text-align: center;
+    opacity: .49;
+    cursor: pointer;
+    transition: 117ms opacity;
+}
+
+.deleter:hover {
+    opacity: .84;
+}
+
 .index {
     display: inline-block;
     width: 1.4em;
@@ -158,12 +174,12 @@ h1 {
     text-align: center;
 }
 
-#adder #adderAmount {
-    margin-bottom: .35em;
-    width: 4.9em;
-    text-align: center;
-}
+    #adder #adderAmount {
+        margin-bottom: .35em;
+        width: 4.9em;
+        text-align: center;
+    }
 
-#adder #adderButton {
-    width: 100%;
-}
+    #adder #adderButton {
+        width: 100%;
+    }

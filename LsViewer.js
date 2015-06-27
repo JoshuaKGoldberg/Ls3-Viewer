@@ -60,6 +60,14 @@ LsViewer.prototype.generateNext = function (amount) {
         row.className = "row";
 
         cell = document.createElement("span");
+        cell.className = "deleter";
+        cell.textContent = "x";
+        cell.onclick = function (index) {
+            this.retractAfter(this.generator.generatedArray[index]);
+        }.bind(this, i);
+        row.appendChild(cell);
+
+        cell = document.createElement("span");
         cell.className = "index";
         cell.textContent = i + 1;
 
