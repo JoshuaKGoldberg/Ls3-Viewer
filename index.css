@@ -192,3 +192,22 @@ h1 {
     #skipper #skipperStart {
         float: right;
     }
+
+
+/* Credits */
+
+#credits {
+    float: right;
+}
+
+
+/* Screen size shenanigans */
+
+@media(max-width:700px),(max-aspect-ratio:1/1) {
+    .bottomOptions, #credits {
+        float: none !important;
+        clear: both;
+        margin: .7em auto .7em;
+        text-align: center;
+    }
+}
