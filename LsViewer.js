@@ -144,6 +144,8 @@ LsViewer.prototype.retractAfter = function (min) {
     for (i = (generatedStart / 2 - .5) | 0; i < gaps.length; i += 1) {
         this.container.removeChild(gaps[i]);
     }
+
+    this.current = generatedStart;
 };
 
 /**

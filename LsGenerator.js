@@ -27,7 +27,6 @@ LsGenerator.prototype.generateNext = function (number, startFrom) {
         i, j;
 
     i = startFrom ? startFrom - 1 : this.maximum;
-    console.log("startfrom->i", i, "from", startFrom);
 
     do {
         i += 1;
