@@ -112,13 +112,29 @@ LsViewer.prototype.generateNext = function (amount) {
 /**
  * 
  */
+LsViewer.prototype.retractAfter = function (min) {
+    var generatedStart = this.generator.retractAfter(min),
+        rows = Array.prototype.slice.call(this.container.querySelectorAll(".row")),
+        gaps = Array.prototype.slice.call(this.container.querySelectorAll(".gap")),
+        i;
+
+    for (i = generatedStart + 1; i < rows.length; i += 1) {
+        this.container.removeChild(rows[i]);
+    }
+
+    for (i = (generatedStart / 2 - .5) | 0; i < gaps.length; i += 1) {
+        this.container.removeChild(gaps[i]);
+    }
+};
+
+/**
+ * 
+ */
 LsViewer.prototype.generateSearch = function generateSearch(search) {
     if (!search) {
         search = "";
-    } else {
-        if (search[0] == "?") {
-            search = search.substring(1);
-        }
+    } else if (search[0] == "?") {
+        search = search.substring(1);
     }
 
     var args = search.split("?").map(
@@ -133,22 +149,4 @@ LsViewer.prototype.generateSearch = function generateSearch(search) {
     }
 
     return output;
-};
-
-/**
- * 
- */
-LsViewer.prototype.retractAfter = function (min) {
-    var generatedStart = this.generator.retractAfter(min),
-        rows = Array.prototype.slice.call(this.container.querySelectorAll(".row")),
-        gaps = Array.prototype.slice.call(this.container.querySelectorAll(".gap")),
-        i;
-
-    for (i = generatedStart + 1; i < rows.length; i += 1) {
-        this.container.removeChild(rows[i]);
-    }
-
-    for (i = Math.max(generatedStart - 3, 0) ; i < gaps.length; i += 1) {
-        this.container.removeChild(gaps[i]);
-    }
 };

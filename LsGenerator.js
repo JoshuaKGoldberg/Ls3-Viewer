@@ -25,8 +25,6 @@ LsGenerator.prototype.generateNext = function generateNext(number) {
         exclude,
         i, j;
 
-    console.log("Generating", number);
-
     i = this.maximum;
 
     do {
@@ -102,29 +100,24 @@ LsGenerator.prototype.retractAfter = function (minimum) {
 
 /**
  * 
+ * 
+ * @remarks This doesn't use binary search, as this.excludedArray isn't sorted.
  */
 LsGenerator.prototype.findMinimum = function (array, minimum) {
-    var min = 0,
-        max = array.length - 1,
-        current;
+    var bestDifference = Math.abs(array[0] - minimum),
+        bestIndex = 0,
+        difference, i;
 
-    while (min <= max) {
-        current = (min + max) / 2 | 0;
+    for (i = 1; i < array.length; i += 1) {
+        difference = Math.abs(array[i] - minimum);
 
-        if (array[current] < minimum) {
-            min = current + 1;
-        } else if (array[current] > minimum) {
-            max = current - 1;
-        } else {
-            return current;
+        if (difference < bestDifference) {
+            bestDifference = difference;
+            bestIndex = i;
         }
     }
 
-    if (array[min] > minimum) {
-        return min;
-    }
-
-    return -1;
+    return bestIndex;
 };
 
 // async (start, stop methods)
