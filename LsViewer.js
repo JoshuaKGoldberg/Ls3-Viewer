@@ -5,7 +5,7 @@ function LsViewer(settings) {
     }),
 
     this.search = this.generateSearch(location.search),
-    this.increment = 5,
+    this.increment = 100,
     this.current = 0,
     this.container = document.getElementById("viewer"),
     this.primeGenerator = new PrimeGenerator();
