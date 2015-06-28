@@ -19,8 +19,9 @@ h1 {
 }
 
 #headtext {
-    padding-top: .49em;
     float: left;
+    padding-top: .49em;
+    text-align: left;
 }
 
 
