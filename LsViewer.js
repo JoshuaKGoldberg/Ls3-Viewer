@@ -23,7 +23,23 @@ function LsViewer(settings) {
         }
     }.bind(this);
 
-    // Adder button gets adds more
+    // Continue button continues from a user-selected start
+    document.getElementById("skipperButton").onclick = function () {
+        var value = parseInt(document.getElementById("skipperStart").value);
+        this.generateNext(1, value);
+    }.bind(this);
+
+    // The continue button also cannot go below the current maximum
+    document.getElementById("skipperStart").onchange = function (event) {
+        var value = parseInt(event.target.value);
+        if (value < this.generator.maximum + 1) {
+            event.target.value = this.generator.maximum + 1;
+        }
+
+        event.target.style.color = this.generator.excludedMap[value] ? "red" : "black";
+    }.bind(this);
+
+    // Adder button adds a user-selected amount of numbers
     document.getElementById("adderButton").onclick = function () {
         var amount = parseInt(document.getElementById("adderAmount").value);
         this.generateNext(amount);
@@ -33,13 +49,13 @@ function LsViewer(settings) {
 /**
  * 
  */
-LsViewer.prototype.generateNext = function (amount) {
+LsViewer.prototype.generateNext = function (amount, startFrom) {
     var primes = this.primeGenerator.primes,
         cap = this.current + amount,
         row, cell, span, generated, excludes,
         i, j;
 
-    this.generator.generateNext(amount);
+    this.generator.generateNext(amount, startFrom);
     this.primeGenerator.generate(this.generator.maximum);
 
     for (i = this.current; i < cap; i += 1) {
@@ -107,6 +123,9 @@ LsViewer.prototype.generateNext = function (amount) {
     }
 
     this.current = cap;
+
+    // The continue button should be updated for the new amount
+    document.getElementById("skipperStart").value = this.generator.maximum + 1;
 };
 
 /**

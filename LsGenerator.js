@@ -18,14 +18,16 @@ function LsGenerator(settings) {
 /**
  * Generates numbers until a new maximum.
  * 
- * @param {Number} max   A new maximum to generate until.
+ * @param {Number} number   How many numbers to generate.
+ * @param {Number} [startFrom]   A first starting number (if not provided, this.maximum + 1).
  */
-LsGenerator.prototype.generateNext = function generateNext(number) {
+LsGenerator.prototype.generateNext = function (number, startFrom) {
     var generatedLength,
         exclude,
         i, j;
 
-    i = this.maximum;
+    i = startFrom ? startFrom - 1 : this.maximum;
+    console.log("startfrom->i", i, "from", startFrom);
 
     do {
         i += 1;

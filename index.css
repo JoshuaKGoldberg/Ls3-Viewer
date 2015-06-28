@@ -71,9 +71,9 @@ h1 {
     transition: 117ms opacity;
 }
 
-.deleter:hover {
-    opacity: .84;
-}
+    .deleter:hover {
+        opacity: .84;
+    }
 
 .index {
     display: inline-block;
@@ -166,20 +166,28 @@ h1 {
 }
 
 
-/* Adder */
+/* Bottom options */
 
-#adder {
+.bottomOptions {
     display: inline-block;
     font-style: italic;
     text-align: center;
 }
 
-    #adder #adderAmount {
+    .bottomOptions input[type=number] {
         margin-bottom: .35em;
         width: 4.9em;
         text-align: center;
     }
 
-    #adder #adderButton {
+    .bottomOptions input[type=button] {
         width: 100%;
+    }
+
+#skipper {
+    float: left;
+}
+
+    #skipper #skipperStart {
+        float: right;
     }
