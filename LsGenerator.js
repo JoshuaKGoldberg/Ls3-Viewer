@@ -36,32 +36,7 @@ LsGenerator.prototype.generateNext = function (number, startFrom) {
             continue;
         }
 
-        if (this.keepExcludesOf) {
-            this.excludesOf[i] = [];
-        }
-
-        // For each previously excluded number...
-        generatedLength = this.generatedArray.length;
-        for (j = 0; j < generatedLength; j += 1) {
-            // ... compute each possible new exclusion, j
-            exclude = i + i - this.generatedArray[j];
-
-            // If j is a duplicate, ignore it
-            if (this.excludedMap.hasOwnProperty(exclude)) {
-                continue;
-            }
-
-            this.excludedArray.push(exclude);
-            this.excludedMap[exclude] = true;
-
-            if (this.keepExcludesOf) {
-                this.excludesOf[i].push(exclude);
-            }
-        }
-
-        if (this.keepExcludesOf) {
-            this.excludesOf[i].sort();
-        }
+        this.generateExcludesOf(i);
 
         this.generatedArray.push(i);
         this.generatedMap[i] = true;
@@ -71,6 +46,40 @@ LsGenerator.prototype.generateNext = function (number, startFrom) {
 
     this.maximum = Math.max(this.maximum, i);
 };
+
+/**
+ * 
+ */
+LsGenerator.prototype.generateExcludesOf = function (number) {
+    var generatedLength = this.generatedArray.length,
+        generated, exclude, i;
+
+    if (this.keepExcludesOf) {
+        this.excludesOf[number] = [];
+    }
+
+    // For each previously generated number...
+    for (i = 0; i < generatedLength; i += 1) {
+        generated = this.generatedArray[i];
+        exclude = number + number - generated;
+
+
+        if (exclude < 0 || this.excludedMap.hasOwnProperty(exclude)) {
+            continue;
+        }
+
+        this.excludedArray.push(exclude);
+        this.excludedMap[exclude] = true;
+
+        if (this.keepExcludesOf) {
+            this.excludesOf[number].push(exclude);
+        }
+    }
+
+    if (this.keepExcludesOf) {
+        this.excludesOf[number].sort();
+    }
+}
 
 /**
  * 
@@ -95,6 +104,11 @@ LsGenerator.prototype.retractAfter = function (minimum) {
     this.generatedArray.length = generatedStart;
 
     this.maximum = this.generatedArray[this.generatedArray.length - 1] || 1;
+
+    // Regenerate excluded numbers
+    for (i = 0; i < this.generatedArray.length; i += 1) {
+        this.generateExcludesOf(this.generatedArray[i]);
+    }
 
     return generatedStart;
 };
