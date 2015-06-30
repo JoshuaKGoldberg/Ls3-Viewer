@@ -63,7 +63,6 @@ LsGenerator.prototype.generateExcludesOf = function (number) {
         generated = this.generatedArray[i];
         exclude = number + number - generated;
 
-
         if (exclude < 0 || this.excludedMap.hasOwnProperty(exclude)) {
             continue;
         }
@@ -90,8 +89,8 @@ LsGenerator.prototype.retractAfter = function (minimum) {
         generatedStart = this.findMinimum(this.generatedArray, minimum),
         i;
 
-    // Remove all the excluded numbers past the minimum
-    for (i = excludedStart; i < this.excludedArray.length; i += 1) {
+    // Remove all the excluded numbers
+    for (i = 0; i < this.excludedArray.length; i += 1) {
         delete this.excludedMap[this.excludedArray[i]];
         delete this.excludesOf[this.excludedArray[i]];
     }
