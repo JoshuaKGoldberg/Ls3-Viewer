@@ -7,5 +7,5 @@ document.onreadystatechange = function (event) {
         return;
     }
 
-    window.viewer = new LsViewer();
+    window.viewer = new Ls3.LsViewer();
 };
